@@ -754,7 +754,7 @@ YY_RULE_SETUP
 case 15:
 YY_RULE_SETUP
 #line 36 "lex.l"
-{nb_colonne+=yyleng; return op_comp;}
+{yylval.chaine=strdup(yytext);nb_colonne+=yyleng; return op_comp;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP

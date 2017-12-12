@@ -1,19 +1,22 @@
--initialisation des variables partie declaration? 
+-affecter un entier à un reel ? on le transform en un reel ?
+reel c ;
+je fais : c<--5; ça sauvegarde : c<--5.0;
+
 
 /*dzadzada*/
 //dadazdzadza
 ALGORITHME algo
-VAR entier a;
+VAR entier a;entier c;chaine d;
 reel a|b;
 a[5]:entier;a:entier; b:reel;
 //dazdazdazdzada
 DEBUT 
 /*dzadzadzada*/
-Faire a<--5; SI (a=5)
-a<--val;
-Pour a<--5 jusque 5 Faire a<--5;Faire a<--5; SI (a=5)
-a<--val;
-a<--val; Fait
+Faire a<--2; SI (a=5)
+a<--3+5+7;
+Pour a<--5 jusque 5 Faire a<--9;Faire a<--7; SI (a=5)
+a<--5;
+a<--7; Fait
 FIN
 /*dazdzada*/
 //adzda
