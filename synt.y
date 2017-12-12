@@ -10,6 +10,7 @@ int qc=0;
 char tmp[20],tmp2[20],tmp3[20],type[20],tmp4[20];
 int x=0;
 int jump;
+int sauv_cond=0,sauv_inst=0;
 
 %}
 
@@ -80,8 +81,13 @@ inst_boucle: mc_Pour identificateur op_AFF identificateur mc_jusque identificate
 			;
 
 //------------------Instruction Condition-------------
-inst_cond:mc_Faire inst_aff mc_SI parenthese_gauche cond  parenthese_droite 
-; 
+
+inst_cond:B mc_SI parenthese_gauche cond  parenthese_droite
+;
+B :A inst_aff
+;
+A:mc_Faire {}
+;
 
 
 
@@ -99,8 +105,10 @@ cond: identificateur op_comp const_entier
 //------------------Instruction Affectation-----------
 // on peut affecter un entier  à un reel ex: a<--5; ça devient a=5.0 , c'est pour ça qu'on a rajouté des conditions dans la ligne juste en dessous
 
-inst_aff: identificateur op_AFF exp_arith pvg {    if(strcmp(ts[recherche($1)].TypeEntite,type)!=0 && !(strcmp(ts[recherche($1)].TypeEntite,"reel")==0 && strcmp(type,"entier")==0)) {printf("-----------Erreur de type d'affectation ! LIGNE : %d . La variable: %s declare commme %s  \n ",nb_ligne,$1,ts[recherche($1)].TypeEntite);}else {quadr(":=",tmp2," ",$1);}}
-	      |identificateur op_AFF const_chaine pvg {strcpy(type,"chaine");if(strcmp(ts[recherche($1)].TypeEntite,type)!=0) {printf("-----------Erreur de type d'affectation ! LIGNE : %d . La variable: %s declare commme %s  \n ",nb_ligne,$1,ts[recherche($1)].TypeEntite);}else {quadr(":=",$3," ",$1);}}
+inst_aff: identificateur op_AFF exp_arith pvg {    if(strcmp(ts[recherche($1)].TypeEntite,type)!=0 && !(strcmp(ts[recherche($1)].TypeEntite,"reel")==0 && strcmp(type,"entier")==0)) {printf("-----------Erreur de type d'affectation ! LIGNE : %d . La variable: %s declare commme %s  \n ",nb_ligne,$1,ts[recherche($1)].TypeEntite);}
+			else {quadr(":=",tmp2," ",$1);}}
+	      |identificateur op_AFF const_chaine pvg {strcpy(type,"chaine");if(strcmp(ts[recherche($1)].TypeEntite,type)!=0) {printf("-----------Erreur de type d'affectation ! LIGNE : %d . La variable: %s declare commme %s  \n ",nb_ligne,$1,ts[recherche($1)].TypeEntite);}
+			else {quadr(":=",$3," ",$1);}}
 ; 
 exp_arith: exp_arith op_arith identificateur  { if( $3==0 && strcmp("/",$2)==0) {printf("ERREUR SEMANTIQUE : division par zero ligne %d colonne %d \n ",nb_ligne,nb_colonne-1);} 
 			else {sprintf(tmp,"%s",$3);sprintf(tmp3,"T%d",t);quadr($2,tmp2,tmp,tmp3);sprintf(tmp2,"T%d",t);t=t+1;}}
